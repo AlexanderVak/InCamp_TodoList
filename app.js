@@ -10,11 +10,25 @@ function logRequest({ method, url }, res, next) {
 app.use(express.json())
 app.use(logRequest)
 
-const tasks = [{ id: 1, title: 'First task' }, { id: 2, title: 'Second task' }]
+const increment = (init = 0) => () => ++init
+const genId = increment()
+const tasks = [
+    { id: genId(), title: 'First task', done: false },
+    { id: genId(), title: 'Second task', done: false }
+]
+
+const createTask = data => {
+    return{
+        id: genId(),
+        title: data.title,
+        done: false
+    }
+}
+
 app.get('/tasks', (req, res) => { res.json(tasks) })
 
 app.post('/tasks', (req, res) => {
-    const task = req.body
+    const task = createTask(req.body)
     tasks.push(task)
     res.json(task)
 })
