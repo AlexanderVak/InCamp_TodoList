@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "jest": {
+    "testMatch": ["**/tests/*.js?(x)"]
+  },
   "scripts": {
     "test": "jest"
   },
@@ -18,7 +21,11 @@
   },
   "homepage": "https://github.com/AlexanderVak/InCamp_TodoList#readme",
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.9",
+    "babel-jest": "^27.0.6",
     "express": "^4.17.1",
+    "jest": "^27.0.6",
     "nodemon": "^2.0.12"
   }
 }
