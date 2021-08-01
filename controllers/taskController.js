@@ -11,7 +11,10 @@ class TaskController {
         return Task.findById(id)
     }    
     removeById(id){
-        return Task.findByIdAndRemove()
+        return Task.findByIdAndRemove(id)
+    }
+    rewrite(id, task){
+        return Task.findByIdAndRewrite(id, task)
     }
     updateById(id, task){
         return Task.findByIdAndUpdate(id, task)

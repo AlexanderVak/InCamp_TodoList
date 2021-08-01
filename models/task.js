@@ -30,6 +30,14 @@ class Task {
         this.tasks.splice(index, 1)
         return this.tasks
     }
+    findByIdAndRewrite(id, task) {
+        let index = this.tasks.indexOf(this.findById(id))
+        this.tasks[index] = {
+            id: id,
+            ...task
+        }
+        return this.findById(id)
+    }
     findByIdAndUpdate(id, task) {
         this.findById(id).done = task.done
         return this.findById(id)
