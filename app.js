@@ -12,8 +12,4 @@ app.use(express.json())
 app.use(logRequest)
 app.use(router)
 
-
-
-
-
 export default app
