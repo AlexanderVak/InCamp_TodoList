@@ -13,7 +13,7 @@ class TaskController {
     removeById(id){
         return Task.findByIdAndRemove(id)
     }
-    rewrite(id, task){
+    replace(id, task){
         return Task.findByIdAndRewrite(id, task)
     }
     updateById(id, task){

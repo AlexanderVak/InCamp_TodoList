@@ -1,6 +1,5 @@
 import express from 'express';
 
-
 export default function RestfulRoutes(router, controller) {
     var self = { read, write, crud }
 
@@ -22,7 +21,7 @@ export default function RestfulRoutes(router, controller) {
 
         router.put('/:id', middleware, (req, res) => {
             const currentId = parseInt(req.params.id)
-            const model = controller.rewrite(currentId, req.body)
+            const model = controller.replace(currentId, req.body)
             if (model) {
                 res.json(model)
             } else {
@@ -44,7 +43,7 @@ export default function RestfulRoutes(router, controller) {
             const currentId = parseInt(req.params.id)
             const model = controller.removeById(currentId)
             if (model) {
-                res.status(204).json('Data removed')
+                res.status(204)
             } else {
                 res.status(404).json({ error: 'Data not found' })
             }

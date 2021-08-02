@@ -13,8 +13,8 @@ class ListController {
     removeById(id){
         return List.findByIdAndRemove(id)
     }
-    rewrite(id, list){
-        return List.findByIdAndRewrite(id, list)
+    replace(id, list){
+        return List.findByIdAndReplace(id, list)
     }
     updateById(id, list){
         return List.findByIdAndUpdate(id, list)

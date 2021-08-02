@@ -8,12 +8,12 @@ class List {
         {
             id: genId(),
             title: 'First List',
-            tasks: Task.find()
+            tasks: Task
         },
         {
             id: genId(),
             title: 'Second List',
-            tasks: Task.find()
+            tasks: Task
         }
     ]
 
@@ -26,7 +26,7 @@ class List {
             {
                 id: genId(),
                 title: list.title,
-                tasks: Task.find()
+                tasks: Task
             }
         )
         return this.lists[this.lists.length - 1]
@@ -40,7 +40,7 @@ class List {
         this.lists.splice(index, 1)
         return this.lists
     }
-    findByIdAndRewrite(id, list) {
+    findByIdAndReplace(id, list) {
         let index = this.lists.indexOf(this.findById(id))
         this.lists[index] = {
             id: id,
