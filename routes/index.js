@@ -6,5 +6,7 @@ import lists from './list.js'
 router
     .use('/tasks', tasks)
     .use('/lists', lists)
+    .use('/lists/:listId/tasks', tasks)
+
 
 export default router
