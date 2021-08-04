@@ -44,6 +44,7 @@ export default function RestfulRoutes(router, controller) {
             const model = controller.removeById(currentId)
             if (model) {
                 res.status(204)
+                res.end()
             } else {
                 res.status(404).json({ error: 'Data not found' })
             }
