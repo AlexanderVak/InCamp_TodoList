@@ -7,7 +7,12 @@ export default function RestfulRoutes(router, controller) {
         router.get('/', middleware, (req, res) => { res.json(controller.find()) })
         router.get('/:id', middleware, (req, res) => {
             const currentId = parseInt(req.params.id)
-            res.json(controller.findById(currentId))
+            let model = controller.findById(currentId)
+            if (model) {
+                res.status(200).json(model)
+            } else {
+                res.status(204).end()
+            }
         })
 
         return self
@@ -43,7 +48,7 @@ export default function RestfulRoutes(router, controller) {
             const currentId = parseInt(req.params.id)
             const model = controller.removeById(currentId)
             if (model) {
-                res.status(204)
+                res.status(200)
                 res.end()
             } else {
                 res.status(404).json({ error: 'Data not found' })
