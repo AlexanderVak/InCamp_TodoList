@@ -1,37 +1,67 @@
 import Task from '../models/task.js'
 describe('Task class', () => {
-    const tasks = [
-        { id: 1, title: 'First task', done: false },
-        { id: 2, title: 'Second task', done: false }
-    ]
-    const newTask = { id: 3, title: 'New task', done: false }
-    const updatedTask = { id: 2, title: 'Second task', done: true }
-    it('should return all tasks', () => {
-        expect(Task.find()).toStrictEqual(tasks)
-    });
-    it('should return specific task', () => {
-        expect(Task.findById(2)).toStrictEqual(tasks[1])
-    });
-    it('should create new task', () => {
-        expect(Task.create({ title: 'New task' })).toStrictEqual(newTask)
-    });
-    it('should remove specific task', () => {
-        expect(Task.findByIdAndRemove(3)).toStrictEqual(tasks)
-    });
-    it('should update specific task', () => {
-        expect(Task.findByIdAndUpdate(2, { done: true })).toStrictEqual(updatedTask)
-    });
-    it('should rewrite specific task', () => {
-        expect(Task.findByIdAndRewrite(2, {
-            title: "Rewriten title",
-            done: "true",
-            rewrite: true
-        })).toStrictEqual({
+    let tasks = new Task()
+    const newTask = {
+        id: 1,
+        title: 'New task',
+        done: false,
+        dueDate: Date('2021-08-13')
+    }
+    const anotherNewTask = {
+        id: 2,
+        title: 'Another new task',
+        done: false,
+        dueDate: Date('2021-08-22')
+    }
+    const allTasks = [
+        {
+            id: 1,
+            title: 'New task',
+            done: false,
+            dueDate: Date('2021-08-13')
+        },
+        {
             id: 2,
-            title: "Rewriten title",
-            done: "true",
-            rewrite: true
-        })
+            title: 'Another new task',
+            done: false,
+            dueDate: Date('2021-08-22')
+        }
+    ]
+    const updatedTask = {
+        id: 2,
+        title: 'Another new task',
+        done: true,
+        dueDate: Date('2021-08-22')
+    }
+
+    it('should create new task', () => {
+        expect(tasks.create({ title: 'New task', dueDate: '2021-08-13' })).toStrictEqual(newTask)
     });
 
+    it('should create another new task', () => {
+        expect(tasks.create({ title: 'Another new task', dueDate: '2021-08-22' })).toStrictEqual(anotherNewTask)
+    });
+    it('should return all tasks', () => {
+        expect(tasks.find()).toStrictEqual(allTasks)
+    });
+    it('should return specific task', () => {
+        expect(tasks.findById(2)).toStrictEqual(anotherNewTask)
+    });
+
+    it('should update specific task', () => {
+        expect(tasks.findByIdAndUpdate(2, { done: true })).toStrictEqual(updatedTask)
+    });
+    it('should replace specific task', () => {
+        expect(tasks.findByIdAndReplace(2, {
+            title: "Replaced title",
+            done: true,
+        })).toStrictEqual({
+            id: 2,
+            title: "Replaced title",
+            done: true
+        })
+    });
+    it('should remove specific task', () => {
+        expect(tasks.findByIdAndRemove(2)).toStrictEqual([newTask])
+    });
 });
