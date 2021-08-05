@@ -8,12 +8,12 @@ class List {
         {
             id: genId(),
             title: 'First List',
-            tasks: Task
+            tasks: new Task()
         },
         {
             id: genId(),
             title: 'Second List',
-            tasks: Task
+            tasks: new Task()
         }
     ]
 
@@ -26,7 +26,7 @@ class List {
             {
                 id: genId(),
                 title: list.title,
-                tasks: Task
+                tasks: new Task()
             }
         )
         return this.lists[this.lists.length - 1]

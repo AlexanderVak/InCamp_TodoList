@@ -2,23 +2,19 @@ const increment = (init = 0) => () => ++init
 const genId = increment()
 
 class Task {
-    tasks = [
-        { id: genId(), title: 'First task', done: false },
-        { id: genId(), title: 'Second task', done: false }
-    ]
+    tasks = []
 
     find() {
         return this.tasks
     }
 
-    create(task) {
-        this.tasks.push(
-            {
-                id: genId(),
-                title: task.title,
-                done: false
-            }
-        )
+    create(task){
+        this.tasks.push({
+            id: genId(),
+            title: task.title,
+            done: false,
+            dueDate: new Date(task.dueDate)
+        })
         return this.tasks[this.tasks.length - 1]
     }
 
@@ -30,7 +26,7 @@ class Task {
         this.tasks.splice(index, 1)
         return this.tasks
     }
-    findByIdAndRewrite(id, task) {
+    findByIdAndReplace(id, task) {
         let index = this.tasks.indexOf(this.findById(id))
         this.tasks[index] = {
             id: id,
@@ -43,4 +39,4 @@ class Task {
         return this.findById(id)
     }
 }
-export default new Task()
+export default Task
