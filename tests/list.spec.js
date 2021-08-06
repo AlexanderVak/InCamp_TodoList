@@ -1,50 +1,51 @@
 import Task from '../models/task.js'
 import List from '../models/list.js'
 describe('List class', () => {
-    const tasks = [
-        { id: 1, title: 'First task', done: false },
-        { id: 2, title: 'Second task', done: false }
-    ]
+    let lists = new List()
+    let tasks = new Task()
 
-    const lists = [
+    const allLists = [
         {
             id: 1,
-            title: 'First List',
-            tasks: Task.find()
+            title: 'New List',
+            tasks: tasks
         },
         {
             id: 2,
-            title: 'Second List',
-            tasks: Task.find()
+            title: 'Another New List',
+            tasks: tasks
         }
     ]
 
-    const newList = { id: 3, title: 'New List', tasks: Task.find() }
-    const updatedList = { id: 2, title: 'Updated title', tasks: Task.find() }
-    it('should return all tasks', () => {
-        expect(List.find()).toStrictEqual(lists)
+    const newList = { id: 1, title: 'New List', tasks: tasks }
+    const anotherNewList = { id: 2, title: 'Another New List', tasks: tasks }
+    const updatedList = { id: 2, title: 'Updated List Title', tasks: tasks }
+    it('should create new list', () => {
+        expect(lists.create({ title: 'New List' })).toStrictEqual(newList)
     });
-    it('should return specific task', () => {
-        expect(List.findById(2)).toStrictEqual(lists[1])
+    it('should create another new list', () => {
+        expect(lists.create({ title: 'Another New List' })).toStrictEqual(anotherNewList)
     });
-    it('should create new task', () => {
-        expect(List.create({ title: 'New List' })).toStrictEqual(newList)
+    it('should return all lists', () => {
+        expect(lists.find()).toStrictEqual(allLists)
     });
-    it('should remove specific task', () => {
-        expect(List.findByIdAndRemove(3)).toStrictEqual(lists)
+    it('should return specific list', () => {
+        expect(lists.findById(2)).toStrictEqual(anotherNewList)
     });
-    it('should update specific task', () => {
-        expect(List.findByIdAndUpdate(2, { title: 'Updated title' })).toStrictEqual(updatedList)
+    it('should update specific list', () => {
+        expect(lists.findByIdAndUpdate(2, { title: 'Updated List Title' })).toStrictEqual(updatedList)
     });
-    it('should rewrite specific task', () => {
-        expect(List.findByIdAndRewrite(2, {
-            title: "Rewriten title",
-            rewrite: true
+    it('should rewrite specific list', () => {
+        expect(lists.findByIdAndReplace(2, {
+            title: "Replaced title",
+            tasks: tasks
         })).toStrictEqual({
             id: 2,
-            title: "Rewriten title",
-            rewrite: true,
+            title: "Replaced title",
+            tasks: tasks
         })
     });
-
+    it('should remove specific list', () => {
+        expect(lists.findByIdAndRemove(2)).toStrictEqual([allLists[0]])
+    });
 });
