@@ -4,18 +4,7 @@ const increment = (init = 0) => () => ++init
 const genId = increment()
 
 class List {
-    lists = [
-        {
-            id: genId(),
-            title: 'First List',
-            tasks: new Task()
-        },
-        {
-            id: genId(),
-            title: 'Second List',
-            tasks: new Task()
-        }
-    ]
+    lists = []
 
     find() {
         return this.lists
@@ -53,4 +42,4 @@ class List {
         return this.findById(id)
     }
 }
-export default new List()
+export default List

@@ -4,10 +4,7 @@ import RestfulRoutes from './restfulRoutes.js'
 const router = express.Router()
 
 RestfulRoutes(router, controller)
-    .read(
-        [(req, res, next) => { req.listId = req.query.listId; next() }],
-        [(req, res, next) => { req.listId = req.params.listId; next() }]
-    )
+    .read()
     .write()
 
 export default router
