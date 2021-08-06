@@ -1,45 +1,37 @@
 import Task from "./task.js"
-
-const increment = (init = 0) => () => ++init
-const genId = increment()
+import pool from "../db/index.js"
 
 class List {
-    lists = []
-
-    find() {
-        return this.lists
+    async find() {
+        let lists = await pool.query('SELECT * FROM lists ORDER BY id')
+        return lists.rows
     }
 
-    create(list) {
-        this.lists.push(
-            {
-                id: genId(),
-                title: list.title,
-                tasks: new Task()
-            }
-        )
-        return this.lists[this.lists.length - 1]
+    async create(list) {
+        await pool.query('INSERT INTO lists (title) VALUES ($1)', [list.title])
+        
+        let lists = await pool.query('SELECT * FROM lists ORDER BY id DESC LIMIT 1')
+        return lists.rows
     }
 
-    findById(id) {
-        return this.lists.find(l => l.id === id)
+    async findById(id) {
+        
+        let lists = await pool.query('SELECT * FROM lists WHERE id=$1', [id])
+        return lists.rows
     }
-    findByIdAndRemove(id) {
-        let index = this.lists.indexOf(this.findById(id))
-        this.lists.splice(index, 1)
-        return this.lists
+
+    async findByIdAndRemove(id) {
+        let lists = await pool.query('DELETE FROM lists WHERE id=$1', [id])
+        return lists.rows
     }
-    findByIdAndReplace(id, list) {
-        let index = this.lists.indexOf(this.findById(id))
-        this.lists[index] = {
-            id: id,
-            ...list
-        }
+
+    async findByIdAndReplace(id, task) {
+        await pool.query('UPDATE lists SET title=$1, tasks=$2 WHERE id=$4', [task.title, task.tasks, id])
         return this.findById(id)
     }
-    findByIdAndUpdate(id, list) {
-        this.findById(id).title = list.title
+
+    async findByIdAndUpdate(id, task) {
+        await pool.query('UPDATE tasks SET title=$1 WHERE id=$2', [task.done, id])
         return this.findById(id)
-    }
-}
+    }}
 export default List
