@@ -1,7 +1,8 @@
-import Pool from "pg";
-export const pool = new Pool({
+import Pool from "pg-pool";
+const pool = new Pool({
     user: 'todo_app',
     host: 'localhost',
     database: 'todolist',
     password: 'password'
 })
+export default pool
