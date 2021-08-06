@@ -1,41 +1,36 @@
-const increment = (init = 0) => () => ++init
-const genId = increment()
+import pool from '../db/index.js'
 
 class Task {
-    tasks = []
 
-    find() {
-        return this.tasks
-    }
-
-    create(task){
-        this.tasks.push({
-            id: genId(),
-            title: task.title,
-            done: false,
-            dueDate: new Date(task.dueDate)
-        })
-        return this.tasks[this.tasks.length - 1]
+    async find() {
+        let tasksQuery = await pool.query('SELECT * FROM tasks ORDER BY id')
+        return tasksQuery.rows
     }
 
-    findById(id) {
-        return this.tasks.find(t => t.id === id)
+    async create(task) {
+        pool.query('INSERT INTO tasks (title, due_date) VALUES ($1, $2)', [task.title, new Date(task.dueDate)])
+        
+        let tasksQuery = await pool.query('SELECT * FROM tasks ORDER BY id DESC LIMIT 1')
+        console.log(tasksQuery.rows);
+        return tasksQuery.rows
     }
-    findByIdAndRemove(id) {
-        let index = this.tasks.indexOf(this.findById(id))
-        this.tasks.splice(index, 1)
-        return this.tasks
+
+    async findById(id) {
+        let tasksQuery = await pool.query('SELECT * FROM tasks WHERE id=$1', [id])
+        return tasksQuery.rows
     }
-    findByIdAndReplace(id, task) {
-        let index = this.tasks.indexOf(this.findById(id))
-        this.tasks[index] = {
-            id: id,
-            ...task
-        }
+
+    async findByIdAndRemove(id) {
+        let tasksQuery = await pool.query('DELETE FROM tasks WHERE id=$1', [id])
+        return tasksQuery.rows
+    }
+    async findByIdAndReplace(id, task) {
+        await pool.query('UPDATE tasks SET title=$1, done=$2, due_date=$3 WHERE id=$4', [task.title, task.done, task.dueDate, id])
         return this.findById(id)
     }
-    findByIdAndUpdate(id, task) {
-        this.findById(id).done = task.done
+    
+    async findByIdAndUpdate(id, task) {
+        await pool.query('UPDATE tasks SET done=$1 WHERE id=$2', [task.done, id])
         return this.findById(id)
     }
 }
