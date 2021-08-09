@@ -4,7 +4,6 @@ class Task {
 
     async taskExists(id) {
         let result = await pool.query('SELECT * FROM tasks WHERE EXISTS(SELECT id FROM tasks WHERE id=$1)', [id])
-        console.log(result);
     }
 
     async find() {
@@ -13,10 +12,9 @@ class Task {
     }
 
     async create(task) {
-        await pool.query('INSERT INTO tasks (title, due_date) VALUES ($1, $2)', [task.title, new Date(task.dueDate)])
+        await pool.query('INSERT INTO tasks (title, due_date, list_id) VALUES ($1, $2, 3)', [task.title, new Date(task.dueDate), task.listId])
 
         let tasks = await pool.query('SELECT * FROM tasks ORDER BY id DESC LIMIT 1')
-        console.log(tasks.rows);
         return tasks.rows
     }
 
