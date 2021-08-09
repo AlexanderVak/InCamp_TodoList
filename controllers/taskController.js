@@ -1,8 +1,8 @@
 import Task from '../models/task.js'
 let tasks = new Task()
 class TaskController {
-    find(){
-        return tasks.find()
+    find(listId){
+        return tasks.find(listId)
     }
     create(task){
         return tasks.create(task)
