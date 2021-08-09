@@ -41,5 +41,6 @@ class Task {
         await pool.query('UPDATE tasks SET done=$1 WHERE id=$2', [task.done, id])
         return this.findById(id)
     }
+
 }
 export default Task
