@@ -2,12 +2,16 @@ import pool from '../db/index.js'
 
 class Task {
 
-    async taskExists(id) {
-        let result = await pool.query('SELECT * FROM tasks WHERE EXISTS(SELECT id FROM tasks WHERE id=$1)', [id])
+    async taskExists(task) {
+        if (task.rows.length > 0) {
+            return task.rows
+        } else {
+            return false
+        }
     }
 
-    async find() {
-        let tasks = await pool.query('SELECT * FROM tasks ORDER BY id')
+    async find(listId) {
+        let tasks = await pool.query('SELECT * FROM tasks WHERE list_id=$1 ORDER BY id', [listId])
         return tasks.rows
     }
 
@@ -19,14 +23,14 @@ class Task {
     }
 
     async findById(id) {
-        let tasks = await pool.query('SELECT * FROM tasks WHERE id=$1', [id])
-        this.taskExists(id)
-        return tasks.rows
+        let task = await pool.query('SELECT * FROM tasks WHERE id=$1', [id])
+        return await this.taskExists(task)
+
     }
 
     async findByIdAndRemove(id) {
-        let tasks = await pool.query('DELETE FROM tasks WHERE id=$1', [id])
-        return tasks.rows
+        let task = await pool.query('DELETE FROM tasks WHERE id=$1', [id])
+        return await this.taskExists(task)
     }
     async findByIdAndReplace(id, task) {
         await pool.query('UPDATE tasks SET title=$1, done=$2, due_date=$3 WHERE id=$4', [task.title, task.done, task.dueDate, id])

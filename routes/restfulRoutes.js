@@ -5,11 +5,17 @@ export default function RestfulRoutes(router, controller) {
 
     function read(...middleware) {
         router.get('/', middleware, async (req, res) => {
+            console.log(req.listId);
             res.json(await controller.find())
         })
         router.get('/:id', middleware, async (req, res) => {
             const currentId = parseInt(req.params.id)
-            res.json(await controller.findById(currentId))
+            let result = await controller.findById(currentId)
+            if (result) {
+                res.json(result)
+            } else {
+                res.status(404).end()
+            }
         })
         return self
     }
