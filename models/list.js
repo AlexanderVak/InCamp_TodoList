@@ -8,6 +8,12 @@ class List {
             return false
         }
     }
+
+    async find() {
+        let lists = await pool.query('SELECT * FROM lists ORDER BY id')
+        return lists.rows
+    }
+
     async create(list) {
         await pool.query('INSERT INTO lists (title) VALUES ($1)', [list.title])
 
