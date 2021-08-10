@@ -4,10 +4,13 @@ import RestfulRoutes from './restfulRoutes.js'
 const router = express.Router({ mergeParams: true })
 
 router.get('/', async (req, res) => {
-    console.log(req.listId);
-    console.log(req.query.all);
-
-    res.json(await controller.find(req.listId, req.query.all))
+    let result = await controller.find(req.listId, req.query.all)
+    if (result) {
+        res.json(result)    
+    } else {
+        res.status(404).end()
+    }
+    
 })
 router.get('/:id', async (req, res) => {
     const currentId = parseInt(req.params.id)
@@ -19,7 +22,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 router.post('/', async (req, res) => {
-    res.json(await controller.create(req.body))
+    res.json(await controller.create(req.body, req.listId))
 })
 
 router.put('/:id', async (req, res) => {

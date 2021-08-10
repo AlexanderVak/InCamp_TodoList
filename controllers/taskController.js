@@ -4,8 +4,8 @@ class TaskController {
     find(listId, queryParams) {
         return tasks.find(listId, queryParams)
     }
-    create(task) {
-        return tasks.create(task)
+    create(task, listId) {
+        return tasks.create(task, listId)
     }
     findById(id, listId) {
         return tasks.findById(id, listId)
