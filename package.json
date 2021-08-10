@@ -5,7 +5,9 @@
   "description": "",
   "main": "app.js",
   "jest": {
-    "testMatch": ["**/tests/*.js?(x)"]
+    "testMatch": [
+      "**/tests/*.js?(x)"
+    ]
   },
   "scripts": {
     "test": "jest"
@@ -27,5 +29,8 @@
     "express": "^4.17.1",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "knex": "^0.21.21"
   }
 }

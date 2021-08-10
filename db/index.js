@@ -1,8 +1,5 @@
-import Pool from "pg-pool";
-const pool = new Pool({
-    user: 'todo_app',
-    host: 'localhost',
-    database: 'todolist',
-    password: 'password'
-})
-export default pool
+import knex from "knex";
+import * as knexFile from "./knexfile";
+
+const db = knex(knexFile.development)
+export default db
