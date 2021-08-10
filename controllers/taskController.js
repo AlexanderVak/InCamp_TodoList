@@ -1,23 +1,23 @@
 import Task from '../models/task.js'
 let tasks = new Task()
 class TaskController {
-    find(listId){
-        return tasks.find(listId)
+    find(listId, queryParams) {
+        return tasks.find(listId, queryParams)
     }
-    create(task){
+    create(task) {
         return tasks.create(task)
     }
-    findById(id){
-        return tasks.findById(id)
-    }    
-    removeById(id){
-        return tasks.findByIdAndRemove(id)
+    findById(id, listId) {
+        return tasks.findById(id, listId)
     }
-    replace(id, task){
-        return tasks.findByIdAndReplace(id, task)
+    removeById(id, listId) {
+        return tasks.findByIdAndRemove(id, listId)
     }
-    updateById(id, task){
-        return tasks.findByIdAndUpdate(id, task)
+    replace(id, listId, task) {
+        return tasks.findByIdAndReplace(id, listId, task)
+    }
+    updateById(id, listId, task) {
+        return tasks.findByIdAndUpdate(id, listId, task)
     }
 }
 export default new TaskController()
