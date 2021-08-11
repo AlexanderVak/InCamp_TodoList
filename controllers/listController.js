@@ -1,23 +1,34 @@
 import List from '../models/list.js'
-let lists = new List()
 class ListController {
-    find(){
-        return lists.find()
+    find() {
+        return List.findAll({ group: 'id' })
     }
-    create(list){
-        return lists.create(list)
+    create(list) {
+        return List.create(list)
     }
-    findById(id){
-        return lists.findById(id)
-    }    
-    removeById(id){
-        return lists.findByIdAndRemove(id)
+    findById(id) {
+        return List.findByPk(id)
     }
-    replace(id, list){
-        return lists.findByIdAndReplace(id, list)
+    removeById(id) {
+        return List.destroy({
+            where: {
+                id: id
+            }
+        })
     }
-    updateById(id, list){
-        return lists.findByIdAndUpdate(id, list)
+    replace(id, list) {
+        return List.update(list, {
+            where: {
+                id: id
+            }
+        })
+    }
+    updateById(id, list) {
+        return List.update(list, {
+            where: {
+                id: id
+            }
+        })
     }
 }
 export default new ListController()
