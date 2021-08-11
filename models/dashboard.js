@@ -1,4 +1,4 @@
-import pool from "../db/index.js"
+import db from "../db/index.js"
 export default class Dashboard {
     dashboardUnfinishedQuery = `SELECT COUNT(*) as unfinished_tasks, lists.id as list_id, lists.title as list_title
     FROM lists
@@ -8,7 +8,14 @@ export default class Dashboard {
     ORDER BY lists.id`
 
     async dashboardUnfinished() {
-        let plannedTasks = await pool.query(this.dashboardUnfinishedQuery, [new Date()])
-        return plannedTasks.rows
+        let plannedTasks = await db('lists')
+            .leftJoin('tasks', 'lists.id', 'tasks.list_id')
+            .select('lists.id as list_id', 'lists.title as list-title')
+            .count('* as unfinished_tasks')
+            .whereBetween ('tasks.due_date', [new Date(), 'tasks.due_date'])
+            .groupBy ('lists.id')
+            .orderBy('lists.id')
+
+        return plannedTasks
     }
 }
