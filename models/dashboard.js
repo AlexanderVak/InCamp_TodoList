@@ -12,7 +12,8 @@ export default class Dashboard {
             .leftJoin('tasks', 'lists.id', 'tasks.list_id')
             .select('lists.id as list_id', 'lists.title as list-title')
             .count('* as unfinished_tasks')
-            .whereBetween ('tasks.due_date', [new Date(), 'tasks.due_date'])
+            .whereBetween ('tasks.due_date', [new Date(), db.column('tasks.due_date')])
+            .andWhere('tasks.done', false)
             .groupBy ('lists.id')
             .orderBy('lists.id')
 
