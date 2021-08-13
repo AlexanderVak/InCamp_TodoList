@@ -18,6 +18,12 @@ const Task = sequelize.define('task', {
     due_date: {
         type: Sequelize.DATE
     }
-}, { underscore: true, tableName: 'tasks' })
+}, {
+    underscored: true,
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
+    tableName: 'tasks',
+})
 
 export default Task

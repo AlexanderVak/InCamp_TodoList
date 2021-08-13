@@ -1,6 +1,5 @@
 import express from 'express'
 import controller from '../controllers/taskController.js'
-import RestfulRoutes from './restfulRoutes.js'
 const router = express.Router({ mergeParams: true })
 
 router.get('/', async (req, res) => {
@@ -10,7 +9,6 @@ router.get('/', async (req, res) => {
     } else {
         res.status(404).end()
     }
-    
 })
 router.get('/:id', async (req, res) => {
     const currentId = parseInt(req.params.id)

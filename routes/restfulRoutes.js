@@ -1,4 +1,3 @@
-import express from 'express';
 
 export default function RestfulRoutes(router, controller) {
     var self = { read, write, crud }
@@ -52,6 +51,3 @@ export default function RestfulRoutes(router, controller) {
     }
     return self
 }
-
-
-

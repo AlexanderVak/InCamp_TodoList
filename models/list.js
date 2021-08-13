@@ -12,7 +12,13 @@ const List = sequelize.define('list', {
     title: {
         type: Sequelize.STRING,
     }
-}, { tableName: 'lists' })
+}, {
+    underscored: true,
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
+    tableName: 'lists'
+})
 
 List.hasMany(Task)
 

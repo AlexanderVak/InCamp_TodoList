@@ -1,7 +1,7 @@
 import List from '../models/list.js'
 class ListController {
     find() {
-        return List.findAll({ group: 'id' })
+        return List.findAll({ groupBy: 'id' })
     }
     create(list) {
         return List.create(list)
@@ -17,10 +17,13 @@ class ListController {
         })
     }
     replace(id, list) {
-        return List.update(list, {
-            where: {
-                id: id
-            }
+        return List.update({
+            id: id,
+            title: list.title
+        }, {
+            where: { id: id },
+            returning: true,
+            plain: true
         })
     }
     updateById(id, list) {
