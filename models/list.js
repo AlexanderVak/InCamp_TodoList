@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize'
 import sequelize from '../config/config.js'
-import Task from './task.js'
 
 const List = sequelize.define('list', {
     id: {
@@ -20,6 +19,6 @@ const List = sequelize.define('list', {
     tableName: 'lists'
 })
 
-List.hasMany(Task)
+
 
 export default List

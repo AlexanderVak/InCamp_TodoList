@@ -1,4 +1,4 @@
-import Task from '../models/task.js'
+import {Task} from '../models/index.js'
 class TaskController {
     find(listId, queryParams) {
         if (queryParams) {

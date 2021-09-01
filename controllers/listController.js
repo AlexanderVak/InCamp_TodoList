@@ -1,4 +1,4 @@
-import List from '../models/list.js'
+import {List} from '../models/index.js'
 class ListController {
     find() {
         return List.findAll({ groupBy: 'id' })

@@ -15,7 +15,7 @@ const Task = sequelize.define('task', {
         type: Sequelize.BOOLEAN,
         default: false
     },
-    due_date: {
+    dueDate: {
         type: Sequelize.DATE
     }
 }, {
@@ -25,5 +25,7 @@ const Task = sequelize.define('task', {
     updatedAt: false,
     tableName: 'tasks',
 })
+
+
 
 export default Task
