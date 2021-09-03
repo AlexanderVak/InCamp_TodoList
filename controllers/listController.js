@@ -1,7 +1,7 @@
 import {List} from '../models/index.js'
 class ListController {
     find() {
-        return List.findAll({ groupBy: 'id' })
+        return List.findAll({ order: ['id'] })
     }
     create(list) {
         return List.create(list)

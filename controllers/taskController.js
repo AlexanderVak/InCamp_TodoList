@@ -4,7 +4,7 @@ class TaskController {
         if (queryParams) {
             return Task.findAll({
                 where: { list_id: listId },
-                groupBy: 'id'
+                order: ['id']
             })
         } else {
             return Task.findAll({
@@ -12,7 +12,7 @@ class TaskController {
                     list_id: listId,
                     done: false
                 },
-                groupBy: 'id'
+                order: ['id']
             })
         }
     }
